@@ -1,0 +1,24 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'index' %}">Blog Book</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+              <a class="nav-link" href="{% url 'feed_view' %}">Feed</a>
+              <a class="nav-link" href="{% url 'blogs:index' %}">Blogs</a>
+              <a class="nav-link" href="{% url 'blogs:blog_create' %}">New Blog</a>
+          </div>
+          <div class="navbar-nav ms-auto">
+              {% if not request.user.is_authenticated %}
+              <a class="nav-link" href="{% url 'auth:login' %}">Login</a>
+              <a class="nav-link" href="{% url 'auth:register' %}">Register</a>
+              {% else %}
+              <a class="nav-link" href="{% url 'auth:logout' %}">Logout</a>
+              {% endif %}
+          </div>
+      </div>
+  </div>
+</nav>

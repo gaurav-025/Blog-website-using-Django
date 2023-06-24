@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<!-- <form method="post">
+  {% csrf_token %}
+  <label for="username" class="form-label">Username</label><br />
+  <input id="username" name="username" type="text" class="form-control" required /><br />
+  <label for="password" class="form-label">Password</label><br />
+  <input id="password" name="password" type="password" class="form-control" required /><br />
+  <button type="login" class="btn btn-primary">Sign up</button>
+</form> -->
+
+<div class="pt-4 row">
+  <form id="login-form" method="post" class="needs-validation col-md-6 offset-md-3" novalidate>
+    <h2>Login Form</h2>
+    {% csrf_token %}
+    {% for field in form %}
+    <label for="{{field.id_for_label}}" class="form-label">{{field.label}}</label>
+    <div class="input-group">
+      {{field}}
+      
+      <div class="valid-feedback w-100">
+        Looks good!
+      </div>
+      <div class="invalid-feedback w-100">
+        {% if field.errors %} 
+        {% for error in field.errors %}
+        {{ error }}
+        <br />
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+    <br />
+    
+    {% endfor %}
+    <button type="login" class="btn btn-primary">Sign in</button>
+  </form>
+</div>
+{% endblock main %}
+
+{% block scripts %}
+  <script>
+    function setValid(target) {
+      target.classList.add('is-valid')
+      target.classList.remove('is-invalid')
+    }
+
+    function setInvalid(target) {
+      target.classList.add('is-invalid')
+      target.classList.remove('is-valid')
+    }
+
+    var loginForm = document.querySelector('#login-form')
+    var [username, password] = loginForm.querySelectorAll(".form-control")
+    var [usernameValidFeedback, passwordValidFeedback] = loginForm.querySelectorAll(".valid-feedback")
+    var [usernameInvalidFeedback, passwordInvalidFeedback] = loginForm.querySelectorAll(".invalid-feedback")
+
+    var usernameValidation = (e) => {
+      var target = username
+      var value = target.value
+      var flag = 0
+      
+      if (!value || value.trim() === ""){
+        usernameInvalidFeedback.innerText = "Username cannot be empty"
+      } else if (!/^[\w.@+_\-]+$/.test(value)) {
+        usernameInvalidFeedback.innerText = "Enter a valid username. This value may contain only letters, numbers, and @/./+/-/_ characters."
+      } else if (value.length >= 30) {
+        usernameInvalidFeedback.innerText = "Length of username cannot be more than 30 characters"
+      }
+      else {
+        flag = 1
+      }
+      
+      if (flag) {
+        setValid(target)
+      } else {
+        setInvalid(target)
+      }
+    }
+
+    // var emailValidation = (e) => {
+    //   var target = email
+    //   var value = target.value
+    //   var flag = 0
+
+    //   if (!value || value.trim() === "") {
+    //     emailInvalidFeedback.innerText = "Email is required"
+    //   } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+    //     emailInvalidFeedback.inerText = "Invalid Email address"
+    //   } else {
+    //     flag = 1
+    //   }
+
+    //   if (flag) {
+    //     setValid(target)
+    //   } else {
+    //     setInvalid(target)
+    //   }
+    // }
+
+    var passwordValidation = (e) => {
+      var target = password
+      var value = target.value
+      var flag = 0
+
+      if (!value || value.trim() === "") {
+        passwordInvalidFeedback.innerText = "Password is required"
+      } else {
+        flag = 1
+      }
+      if (flag) {
+        setValid(target)
+      } else {
+        setInvalid(target)
+      }
+    }
+
+    if (usernameInvalidFeedback.innerHTML.trim())
+      setInvalid(username)
+    else if (username.value) {
+      usernameValidation()
+    }
+
+    // if (emailInvalidFeedback.innerHTML.trim())
+    //   setInvalid(email)
+    // else if (email.value) {
+    //   emailValidation()
+    // } 
+
+    if (passwordInvalidFeedback.innerHTML.trim())
+      setInvalid(password)
+    else if(password.value) {
+      passwordValidation()
+    }
+
+  
+    username.addEventListener('input', usernameValidation)
+    // email.addEventListener('input', emailValidation)
+    password.addEventListener('input', passwordValidation)
+
+  </script>
+{% endblock scripts %}

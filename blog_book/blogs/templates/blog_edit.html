@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'blogs:index' %}">Blogs</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'blogs:blog_view' blog_id=blog.id %}">{{blog.title}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Edit Blog</li>
+  </ol>
+</nav>
+{% endblock %}
+
+{% block main %}
+<h2>Edit Blog '{{blog.title}}'</h2>
+
+<form id="blog-edit-form" method="post" class="needs-validation" novalidate>
+  {% csrf_token %} 
+  <label class="form-label">Title</label>
+  <div class="input-group">
+    <input type="text" name="title" class="form-control" value="{{blog.title}}" maxlength="40" required="" id="id_title">
+  </div>
+  <br />
+  <label class="form-label">Description</label>
+  <div class="input-group">
+    <textarea name="description" cols="40" rows="10" class="form-control" maxlength="500" required="" id="id_description">{{blog.description}}</textarea>
+  </div>
+  <br />
+    <button type="submit" class="btn btn-primary">Edit Blog</button>
+</form>
+{% endblock main %}

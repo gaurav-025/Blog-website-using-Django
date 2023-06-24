@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">Feed</li>
+  </ol>
+</nav>
+{% endblock %}
+
+{% block main %}
+<h2>Feed </h2>
+<p class="mb-4">You can view all posts of all blogs you are following here.</>
+
+<div>
+  {% for post in posts %}
+  <div class="mb-3 card">
+    <div class="card-body">
+      <h5 class="card-title"><a href="/posts/{{ post.id }}/"> {{post.title }}</a></h5>
+      <h6 class="mb-3 card-subtitle"><a href="/blogs/{{ post.blog.id }}/">Blog: {{post.blog.title}}</a></h6>
+      <p class="mb-2 card-subtitle text-muted">{{ post.blog.user }} - {{post.created_at}}</p>
+      <div class="p-4 mb-2 overflow-hidden border markdown-body border-gray rounded-3">
+        {% autoescape off %}
+        {{ post.html }}
+        {% endautoescape %}
+        <div class="post-end d-flex align-items-center justify-content-center">
+          <a href="/posts/{{ post.id }}/" class="btn btn-dark text-decoration-none">View Full Post</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>No posts yet.</p>
+  {% endfor %}  
+</div>
+
+<style>
+  .markdown-body {
+    min-height: 100px;
+    max-height: 250px;
+    position: relative;
+  }
+
+  .post-end {
+    position:absolute; 
+    bottom: 0; 
+    right: 0; 
+    left: 0; 
+    height:100px; 
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgb(255, 255, 255, 1))
+  }
+
+  .post-end .btn-dark {
+    background: black!important;
+    color: white!important;
+  }
+  
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    console.log("hello")
+    console.log($(".markdown-body"))
+</script>
+{% endblock %}

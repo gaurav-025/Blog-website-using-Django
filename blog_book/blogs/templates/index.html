@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Blogs</li>
+  </ol>
+</nav>
+{% endblock %}
+
+{% block main %}
+<h2>View All Blogs</h2>
+
+<div class="pt-3 mb-5">
+  {% for blog in blogs %}
+  <div class="mb-4 rounded-3 card">
+    <div class="card-body">
+      <a href="{% url 'blogs:blog_view' blog_id=blog.id %}">
+        <h5 class="card-title">{{ blog.title }}</h5>
+      </a>
+      <h6 class="mb-2 card-subtitle text-muted">{{blog.user}} - {{blog.created_at}}</h6>
+      <p class="card-text">{{blog.description }}</p>
+    </div>
+  </div>
+  {% empty %}
+  <p>There are no blogs.</p>
+  {% endfor %}
+</div>
+{% endblock %}

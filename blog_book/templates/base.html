@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    {% load static %}
+    <link href="{% static 'markdown.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'index.css' %}" rel="stylesheet" type="text/css" />
+    <title>Blog Book</title>
+  </head>
+  <body>
+    {% include 'partials/header.html' %}
+    <div class="container pt-2">
+      {% block breadcrumbs %}
+      {% endblock %}
+      
+      {% include 'partials/flash.html' %}
+
+      {% block main %} 
+      {% endblock main %}
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+      (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+          .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+
+              form.classList.add('was-validated')
+            }, false)
+          }) 
+      })()
+    </script>
+    <script>
+      setTimeout(function () {
+        $(".alert").alert('close')
+      }, 2000)
+    </script>
+
+  <script>
+      console.log("hello")
+      $(".markdown-body").each(function (elem) {
+        console.log($( this ))
+      })
+  </script>
+
+  {% block scripts %}
+  {% endblock scripts %}
+  </body>
+</html>
